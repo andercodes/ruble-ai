@@ -1,0 +1,15 @@
+FROM node:19.4.0-bullseye
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g pnpm
+
+RUN pnpm install
+
+COPY . .
+
+EXPOSE ${PORT}
+
+CMD ["pnpm", "run", "start:dev"]

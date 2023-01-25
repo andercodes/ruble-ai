@@ -1,7 +1,7 @@
 import {
   PollyClient,
-  StartSpeechSynthesisTaskCommand,
   SynthesizeSpeechCommand,
+  SynthesizeSpeechOutput,
 } from '@aws-sdk/client-polly';
 import { Injectable } from '@nestjs/common';
 
@@ -9,13 +9,13 @@ import { Injectable } from '@nestjs/common';
 export class WellSaidService {
   constructor(private readonly pollyClient: PollyClient) {}
 
-  async generateSpeech(input: string): Promise<unknown> {
+  async generateSpeech(input: string): Promise<SynthesizeSpeechOutput> {
     const command = new SynthesizeSpeechCommand({
       OutputFormat: 'mp3',
       Text: input,
       TextType: 'text',
       VoiceId: 'Joanna',
-      SampleRate: '22050',
+      SampleRate: '8000',
     });
 
     const res = await this.pollyClient.send(command);

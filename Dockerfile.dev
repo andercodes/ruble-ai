@@ -12,4 +12,6 @@ COPY . .
 
 EXPOSE ${PORT}
 
+RUN apt update && apt install ffmpeg -y
+
 CMD ["pnpm", "run", "start:dev"]

@@ -2,9 +2,7 @@ import { ComprehendClient } from '@aws-sdk/client-comprehend';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GptModule } from '../gpt-3/gpt.module';
-import { TwilioModule } from '../twilio/twilio.module';
 import { WellSaidModule } from '../wellsaid/wellsaid.module';
-import { ComprehendController } from './comprehend.controller';
 import { ComprehendService } from './comprehend.service';
 
 function comprehendClientFactory(
@@ -20,7 +18,7 @@ function comprehendClientFactory(
 }
 
 @Module({
-  imports: [GptModule, WellSaidModule, TwilioModule],
+  imports: [GptModule, WellSaidModule],
   providers: [
     {
       provide: ComprehendClient,
@@ -29,7 +27,6 @@ function comprehendClientFactory(
     },
     ComprehendService,
   ],
-  controllers: [ComprehendController],
-  exports: [ComprehendClient],
+  exports: [ComprehendClient, ComprehendService],
 })
 export class ComprehendModule {}

@@ -14,4 +14,6 @@ RUN pnpm run build
 
 EXPOSE ${PORT}
 
+RUN apt update && apt install ffmpeg -y
+
 CMD ["pnpm", "run", "start:prod"]

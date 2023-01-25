@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Twilio } from 'twilio';
-import {TwilioGateway} from './twilio.gateway';
+import { ComprehendModule } from '../comprehend/comprehend.module';
+import { GptModule } from '../gpt-3/gpt.module';
+import { WellSaidModule } from '../wellsaid/wellsaid.module';
+import { TwilioController } from './twilio.controller';
+import { TwilioGateway } from './twilio.gateway';
 import { TwilioService } from './twilio.service';
 
 function twilioClientFactory(configService: ConfigService): Twilio {
@@ -12,7 +16,8 @@ function twilioClientFactory(configService: ConfigService): Twilio {
 }
 
 @Module({
-  imports: [],
+  imports: [WellSaidModule, ComprehendModule, GptModule],
+  controllers: [TwilioController],
   providers: [
     {
       provide: Twilio,
@@ -20,7 +25,7 @@ function twilioClientFactory(configService: ConfigService): Twilio {
       inject: [ConfigService],
     },
     TwilioService,
-    TwilioGateway
+    TwilioGateway,
   ],
   exports: [TwilioService],
 })
